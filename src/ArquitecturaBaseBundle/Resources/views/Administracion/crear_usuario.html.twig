@@ -1,0 +1,132 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/ace-admin/css/dropzone.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+
+
+{% block titulo %}Agregar nuevo usuario{% endblock %}
+
+{% block cuerpo %}
+    {{ form_start(form) }} {#{'attr':{'class':'dropzone'}#}
+
+    <div class="col-col-sm-12 col-lg-12 col-md-12" style="border-bottom: 1px dotted #e2e2e2; margin-bottom: 10px;">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Nombre de usuario
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.nombre, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.nombre, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Contraseña
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.password, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.password, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Rol en el sistema
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.roles, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.roles, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Activo
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.activo, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.activo, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Descripción
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.descripcion, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.descripcion, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Correo
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.correo, {'attr': {'id': 'usuario'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.correo, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                Foto de perfil
+            </label>
+            <div class="col-sm-3 col-lg-3 col-md-3">
+                {{ form_widget(form.foto, {'attr': {'id': 'foto'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.foto, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="align-right" >
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/select2/js/jquery-2.1.0.js') }}"></script>
+    <script src="{{ asset('assets/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/ace-admin/js/dropzone.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#{{ form.roles.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+            Dropzone.options.myAwesomeDropzone = {
+                paramName: "{{ form.foto.vars.id }}", // The name that will be used to transfer the file
+                maxFilesize: 5, // MB
+                accept: function(file, done) {
+                    done();
+                }
+            };
+        });
+    </script>
+{% endblock %}

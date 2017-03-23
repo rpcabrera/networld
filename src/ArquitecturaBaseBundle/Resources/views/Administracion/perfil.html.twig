@@ -1,0 +1,78 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block titulo %}Tu perfil{% endblock %}
+
+{% block cuerpo %}
+
+    <div style="padding: 20px;">
+        <div class="block" style="float: left; margin: 20px;">
+            <span class="profile-picture">
+            <img src="{{ app.user.foto }}" alt="{{ app.user.nombre }}'s Avatar" class="img-responsive" id="avatar" width="128" height="128"/>
+        </span>
+        </div>
+        <div class="profile-user-info profile-user-info-striped" style="float: left; width: 50%;">
+            <div class="profile-info-row">
+                <div class="profile-info-name">
+                    Nombre
+                </div>
+                <div class="profile-info-value">
+                    {{ app.user.nombre }}
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">
+                    Roles
+                </div>
+                <div class="profile-info-value">
+                    {% for rol in app.user.roles %}
+                        {% if loop.first %}
+                            {{ rol }}
+                        {% else %}
+                            , {{ rol }}
+                        {% endif %}
+                    {% else %}
+                        Sin roles
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">
+                    Activo
+                </div>
+                <div class="profile-info-value">
+                    {% if app.user.activo == 1 %}
+                        Activo
+                    {% else %}
+                        Inhabilitado
+                    {% endif %}
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">
+                    Descripción
+                </div>
+                <div class="profile-info-value">
+                    {{ app.user.descripcion }}
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">
+                    Correo
+                </div>
+                <div class="profile-info-value">
+                    {{ app.user.correo }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

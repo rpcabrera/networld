@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{%block miga%}
+    <li>
+        <i class="ace-icon fa fa-home home-icon"></i>
+        <span>Error del sistema</span>
+    </li>
+{%endblock%}
+
+{% block titulo %}
+    Error del sistema
+{% endblock %}
+
+{%block cuerpo %}
+    <div class="col-md-12 padding-20">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <img src="{{ asset('assets/ace-admin/img/500.png') }}" alt="error404" width="400" height="400">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <h1>A ocurrido un error en el sistema, por favor contacte con el administrador</h1>
+            <h2><i>Detalles del error:</i></h2>
+            <h2>{{ exception.message|nl2br|format_file_from_text }}</h2>
+            <a class="btn btn-primary" href="{{ app.request.headers.get('referer') }}">Volver atras</a>
+        </div>
+    </div>
+{%endblock%}

@@ -1,0 +1,151 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/ace-admin/css/datepicker.min.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+
+
+{% block titulo %}Agregar nueva concesión{% endblock %}
+
+{% form_theme form _self %}
+
+{% block checkbox_widget %}
+    <label style="padding-top: 5px;">
+        {% set type = type|default('checkbox') %}
+        {{ block('form_widget_simple') }}
+        <span class="lbl"></span>
+    </label>
+{% endblock %}
+
+{% block cuerpo %}
+    {{ form_start(form) }}
+
+    <div style="border-bottom: 1px dotted #e2e2e2; margin-bottom: 10px;">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.menu.vars.id }}">
+                Menu
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.menu) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.menu, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.rol.vars.id }}">
+                Rol
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.rol) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.rol, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.activa.vars.id }}">
+                Activa
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.activa,{'attr': {'class' : 'ace ace-switch ace-switch-6'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.activa, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+        <div class="input-daterange">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="{{ form.fechainicio.vars.id }}">
+                    Fecha de inicio
+                </label>
+                <div class="col-sm-3 col-lg-3 col-md-3">
+                    <div class="input-group">
+                        {{ form_widget(form.fechainicio,{'attr': {'class': 'form-control'}}) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-lg-5 col-md-5 ">
+                    {{ form_errors(form.fechainicio, {'attr': {'class' : 'alert alert-danger'}}) }}
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 5px;">
+                <label class="col-sm-3 control-label no-padding-right" for="{{ form.fechafin.vars.id }}">
+                    Fecha de fin
+                </label>
+                <div class="col-sm-3 col-lg-3 col-md-3">
+                    <div class="input-group">
+                        {{ form_widget(form.fechafin,{'attr': {'class': 'form-control '}}) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-lg-5 col-md-5 ">
+                    {{ form_errors(form.fechafin, {'attr': {'class' : 'alert alert-danger'}}) }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="align-right" >
+        {{ form_widget(form.aceptar) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/bootstrap-3.3.4/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/ace-admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/select2/js/jquery-2.1.0.js') }}"></script>
+    <script src="{{ asset('assets/ace-admin/js/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/ace-admin/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/select2/js/select2.min.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            $("#{{ form.menu.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+            $("#{{ form.menu.vars.id }}").prop('disabled','disabled');
+            $("#{{ form.rol.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+
+            $('#{{ form.fechainicio.vars.id }}').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            $('#{{ form.fechafin.vars.id }}').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            $('.input-daterange').datepicker({
+                autoclose:true
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,75 @@
+<div id="navbar" class="navbar navbar-default navbar-fixed-top">
+
+    <div class="navbar-container" id="navbar-container">
+
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('inicio_admin') }}" class="navbar-brand">
+                    <small>
+                        <i class="fa fa-adn"></i>
+                        Arquitectura PHP
+                    </small>
+                </a>
+            {% else %}
+                <a href="{{ path('inicio') }}" class="navbar-brand">
+                    <small>
+                        <i class="fa fa-adn"></i>
+                        Arquitectura PHP
+                    </small>
+                </a>
+            {% endif %}
+        </div>
+        {#Este es el menu superior derecho#}
+
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                {% if app.user %}
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            {#Getting the user's avatar#}
+
+                            {% if app.user.foto is defined %}
+                                <img class="nav-user-photo" src="{{ asset(app.user.foto) }}" alt="Avatar" />
+                            {% else %}
+                                <img class="nav-user-photo" src="{{ asset('assets/ace-admin/images/blank_user_icon.png') }}" alt="Avatar" />
+                            {% endif %}
+
+                            <span class="user-info">
+                                {% if app.user.foto is defined %}
+                                    <small>Bienvenido</small> {{ app.user.nombre }}
+                                {% else %}
+                                    <small>Bienvenido</small> {{ app.user.username }}
+                                {% endif %}
+                            </span>
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+                        <ul class="user-menu dropdown-menu dropdown-menu-right dropdown-yellow dropdown-caret dropdown-close">
+                            <li><a href="{{ path('perfil') }}"><i class="ace-icon fa fa-cog"></i> Perfil</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('salir') }}"><i class="ace-icon fa fa-power-off"></i> Salir</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="light-blue">
+                        <a href="{{ path('login') }}"><i class="ace-icon fa fa-cog"></i> Autenticar</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+

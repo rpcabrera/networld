@@ -1,0 +1,191 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/bootstrap-select-1.11.2/dist/css/bootstrap-select.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/bootstrap-iconpicker-1.7.0/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+
+
+{% block titulo %}Agregar nuevo menu{% endblock %}
+
+{% form_theme form _self %}
+
+{% block checkbox_widget %}
+    <label style="padding-top: 5px;">
+        {% set type = type|default('checkbox') %}
+        {{ block('form_widget_simple') }}
+        <span class="lbl"></span>
+    </label>
+{% endblock %}
+
+{% block cuerpo %}
+    {{ form_start(form) }}
+
+    <div style="border-bottom: 1px dotted #e2e2e2; margin-bottom: 10px;">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.etiqueta.vars.id }}">
+                Etiqueta
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.etiqueta) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.etiqueta, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">
+                Tipo de Menú
+            </label>
+            <div class="col-sm-3">
+                <label>
+                    <input type="radio" name="tipomenu" class="ace" value="contenedor" checked="checked"/>
+                    <span class="lbl">Menu contenedor</span>
+                </label>
+                <br/>
+                <label>
+                    <input type="radio" name="tipomenu" class="ace" value="vinculo" />
+                    <span class="lbl">Menú vínculo</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" id="campoRuta">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.ruta.vars.id }}">
+                Ruta
+            </label>
+            <div class="col-sm-4">
+                {{ form_widget(form.ruta) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.ruta, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="menupadre_selector">
+                Menu hijo
+            </label>
+            <div class="col-sm-4">
+                <label>
+                    <input type="checkbox" id="menupadre_selector" class="ace ace-switch ace-switch-6" />
+                    <span class="lbl" ></span>
+                </label>
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="form-group" id="cboxPadre">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.padre.vars.id }}">
+                Menu padre
+            </label>
+            <div class="col-sm-4">
+                {{ form_widget(form.padre) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.padre, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.activo.vars.id }}">
+                Activo
+            </label>
+            <div class="col-sm-4">
+                {{ form_widget(form.activo,{'attr': {'class' : 'ace ace-switch ace-switch-6'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.activo, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="buttonIcon">
+                Icono
+            </label>
+            <div class="col-sm-4">
+                <button id="buttonIcon"
+                        class="btn btn-white"
+                        role="iconpicker"
+                        data-placement="top"
+                        data-selected-class="btn-info"
+                        data-unselected-class="btn-white"
+                ></button>
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="align-right" >
+        {{ form_widget(form.aceptar) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/select2/js/jquery-2.1.0.js') }}"></script>
+    <script src="{{ asset('assets/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-select-1.11.2/dist/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-iconpicker-1.7.0/bootstrap-3.2.0/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-iconpicker-1.7.0/bootstrap-iconpicker/js/iconset/iconset-glyphicon.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-iconpicker-1.7.0/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#{{ form.ruta.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+            $("#{{ form.padre.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+
+            $('#buttonIcon').on('change',function(e){
+                var campoOculto = $("#{{ form.icono.vars.id }}");
+                campoOculto.val(e.icon);
+            });
+
+            var a = $("#menupadre_selector");
+            a.on('change',function(){
+                var activado = $("#menupadre_selector").is(':checked');
+                var campoPadre = $("#{{ form.padre.vars.id }}");
+                var rejillaPadre = $("#cboxPadre");
+                if (!activado){
+                    campoPadre.prop('disabled','disabled');
+                    rejillaPadre.hide();
+//                    campoPadre.select2();
+                }else{
+                    rejillaPadre.show();
+                    campoPadre.prop('disabled',false);
+                }
+            }).change();
+
+            var tipomenu = $("[name=tipomenu]");
+            tipomenu.on('change',function(){
+                var nodo = $('input[name=tipomenu]:checked');
+                var value = nodo.val();
+                var campoPadre = $("#campoRuta");
+                var inputRuta = $("#{{ form.ruta.vars.id }}");
+                if (value == "contenedor"){
+                    campoPadre.hide();
+                    inputRuta.val("");
+//                    console.log("Ocultado campo ruta");
+                }else{
+                    campoPadre.show();
+//                    console.log("Mostrando campo ruta");
+                }
+            }).change();
+        });
+    </script>
+{% endblock %}

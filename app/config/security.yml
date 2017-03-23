@@ -1,0 +1,45 @@
+#Configuración de seguridad del proyecto
+
+security:
+# Codificadores de contraseñas por las vias de autenticacion
+    encoders:
+        #Metod de encriptción para las contraseñas
+        #--Por usuario con bcrypt
+        ArquitecturaBaseBundle\Entity\Usuario:
+            algorithm: bcrypt
+
+# Mecanismos de autenticacion
+    providers:
+        chain_provider:
+            chain:
+                providers: [base_datos]
+
+        base_datos:
+            entity:
+                class: ArquitecturaBaseBundle:Usuario
+                property: nombre
+
+# Los roles seran gestionados dinamicamente por el sistema mediante la clase GestorJerarquiaRoles
+    role_hierarchy:
+        IS_AUTHENTICATED_ANONYMOUSLY: ~
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        default:
+            anonymous: ~
+            http_basic: ~
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login
+                failure_path: login
+                default_target_path: /administracion/inicio
+                always_use_default_target_path: true
+            logout:
+                path:   logout
+                target: /
+
+#Las listas de control de acceso seran gestionadas dinamicamente por el sistema mediante las concesiones
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

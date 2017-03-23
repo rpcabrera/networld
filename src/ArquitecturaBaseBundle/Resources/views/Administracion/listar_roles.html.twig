@@ -1,0 +1,118 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('assets/bootstrap-treeview-master/public/css/bootstrap-treeview.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block titulo %}Listar Roles{% endblock %}
+
+
+{% block cuerpo %}
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div id="arbolJerarquia"></div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div class="tabbable">
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#general" data-toggle="tab">Información General</a>
+                    </li>
+                    <li>
+                        <a href="#usuarios" data-toggle="tab">Usuarios</a>
+                    </li>
+                    <li>
+                        <a href="#concesiones" data-toggle="tab">Concesiones</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane in active" id="general">
+                        <div class="profile-user-info profile-user-info-striped">
+                            {#Nombre#}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">Nombre</div>
+                                <div class="profile-info-value" id="nombre">&nbsp;</div>
+                            </div>
+                            {#Etiqueta#}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">Etiqueta</div>
+                                <div class="profile-info-value" id="etiqueta">&nbsp;</div>
+                            </div>
+                            {#Ruta#}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">Descripción</div>
+                                <div class="profile-info-value" id="descripcion">&nbsp;</div>
+                            </div>
+                            {#Activo#}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">Activo</div>
+                                <div class="profile-info-value" id="activo">&nbsp;</div>
+                            </div>
+                            {#Rol padre#}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">Rol padre</div>
+                                <div class="profile-info-value" id="rolpadre">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="usuarios">
+                        Usuarios
+                    </div>
+                    <div class="tab-pane" id="concesiones">
+                        Concesiones
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row align-right">
+        <a class="btn btn-primary" href="{{ path('crear_rol') }}">Agregar</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-3.3.4/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-treeview-master/tests/lib/bootstrap-treeview.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $.ajax({
+                url: '{{ path('generar_arbol_roles') }}'
+            })
+            .done(function( data ) {
+                console.log(data);
+                $('#arbolJerarquia').treeview({
+                    data: data.roles,
+                    backColor: 'green',
+
+                    onNodeSelected: function(evento, nodo) {
+                        var idNodo = nodo.idNodo;
+                        $.ajax({
+                            url: '{{ path('arbol_nodo_informacion') }}',
+                            data: {
+                                idNodo: idNodo
+                            }
+                        }).done(function(data){
+                            cargarDatosInformacion(data);
+                        });
+                    }
+                })
+            });
+        });
+
+        function cargarDatosInformacion(nodo){
+            $('#nombre').text(nodo.nombre);
+            $('#etiqueta').text(nodo.etiqueta);
+            $('#descripcion').text(nodo.descripcion);
+            $('#activo').text(nodo.activo);
+        }
+
+
+    </script>
+{% endblock %}

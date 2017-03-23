@@ -1,0 +1,13 @@
+# Definicion de los parametros globales para servicios
+parameters:
+#    parameter_name: value
+
+# Definicion de servicios globales
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+# Definicion de importaciones de servicios de los bundles.
+imports:
+    - { resource: "@ArquitecturaBaseBundle/Resources/config/services.yml" }

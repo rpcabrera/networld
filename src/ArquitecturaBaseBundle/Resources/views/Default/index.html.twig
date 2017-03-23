@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block miga %}
+    <li>
+        Bienvenido al sistema
+    </li>
+{% endblock %}
+
+
+{% block titulo %}Curso de Symfony 2{% endblock %}
+{% block cuerpo %}
+    <div style="float: left; width: 20%;">
+        <img src="{{ asset('assets/ace-admin/images/pc-gay.png') }}" alt="Guy" width="200" height="200" />
+    </div>
+    <div style="float: right; width: 80%;">
+        <h2>Bienvenido al curso de Symfony 2</h2>
+        <hr/>
+        <p>Este es el sitio de aprendizaje del marco de trabajo de Symfony 2. Contiene una serie
+            de aspectos como son: el tratamiento de base de datos con Doctrine 2.1, el análisis de los
+            flujos del Modelo Vista Controlador que propone dicho marco, reflejados en los controladores
+            las vistas y el modelo de datos (Entity manager para el maejo de transacciones), las validaciones
+            a nivel de entidades, los formularios y muchas cosas más...
+        </p>
+    </div>
+{% endblock %}

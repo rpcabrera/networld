@@ -1,0 +1,104 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/select2/css/select2.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block titulo %}Agregar nuevo rol{% endblock %}
+
+{% form_theme form _self %}
+
+{% block checkbox_widget %}
+    <label style="padding-top: 5px;">
+        {% set type = type|default('checkbox') %}
+        {{ block('form_widget_simple') }}
+        <span class="lbl"></span>
+    </label>
+{% endblock %}
+
+{% block cuerpo %}
+    {{ form_start(form) }}
+
+    <div style="border-bottom: 1px dotted #e2e2e2; margin-bottom: 10px;">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.nombre.vars.id }}">
+                Nombre
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.nombre) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.nombre, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.etiqueta.vars.id }}">
+                Etiqueta
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.etiqueta) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.etiqueta, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.descripcion.vars.id }}">
+                Descripción
+            </label>
+            <div class="col-sm-3">
+                {{ form_widget(form.descripcion) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.descripcion, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.rolPadre.vars.id }}">
+                Rol padre
+            </label>
+            <div class="col-sm-4">
+                {{ form_widget(form.rolPadre) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.rolPadre, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="{{ form.activo.vars.id }}">
+                Activo
+            </label>
+            <div class="col-sm-4">
+                {{ form_widget(form.activo,{'attr': {'class' : 'ace ace-switch ace-switch-6'}}) }}
+            </div>
+            <div class="col-sm-5 col-lg-5 col-md-5 ">
+                {{ form_errors(form.activo, {'attr': {'class' : 'alert alert-danger'}}) }}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="align-right" >
+        {{ form_widget(form.aceptar) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/select2/js/jquery-2.1.0.js') }}"></script>
+    <script src="{{ asset('assets/select2/js/select2.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#{{ form.rolPadre.vars.id }}").select2({
+                language: 'es',
+                minimumResultsForSearch: Infinity
+            });
+        });
+    </script>
+{% endblock %}

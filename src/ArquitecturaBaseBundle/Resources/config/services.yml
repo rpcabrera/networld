@@ -1,0 +1,73 @@
+services:
+# Redifiniendo el servicio que construye la jerarquia de usuarios del sistema #
+    security.role_hierarchy:
+        class: ArquitecturaBaseBundle\Servicios\GestorJerarquiaRoles
+        arguments: ['%security.role_hierarchy.roles%', '@service_container']
+
+
+# Sevicios relacionados con las Gestoras #
+    base.gestor:
+        class: ArquitecturaBaseBundle\Gestores\BaseGtr
+        arguments: ['@service_container']
+
+    administracion.gestor:
+        class: ArquitecturaBaseBundle\Gestores\AdministracionGtr
+        parent: base.gestor
+
+# Fin de los servicios relacionados con las gestoras #
+
+
+# Listeners a eventos del sistema para el registro de sucesos #
+
+    arquitectura_base.router_firewall:
+        class: ArquitecturaBaseBundle\Servicios\RouterFirewall
+        arguments: ['@service_container']
+
+    arquitectura_base.router_listener:
+        class: ArquitecturaBaseBundle\Listeners\MyRouterListener
+        arguments: ['@arquitectura_base.router_firewall', '@service_container']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    administracion.generador_arbol:
+        class: ArquitecturaBaseBundle\Servicios\TreeGenerator
+        arguments: ['@service_container']
+
+    administracion.traza:
+        class: ArquitecturaBaseBundle\Servicios\TrazasService
+        arguments: ['@service_container']
+
+    rutas.gestor:
+        class: ArquitecturaBaseBundle\Servicios\RouteManager
+        arguments: ['@router']
+
+    arquitectura.util_twig_extension:
+         class: ArquitecturaBaseBundle\Twig\UtilTwigExtension
+         arguments: ['@kernel']
+         tags:
+             - { name: twig.extension }
+
+    arquitectura.miga_listener:
+        class: ArquitecturaBaseBundle\Listeners\MigaListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request}
+
+    arquitectura.login_success_handler:
+        class: ArquitecturaBaseBundle\Listeners\TrazasListener
+        arguments: ['@administracion.traza', '@security.authorization_checker', '%traza_nivel%', '@security.token_storage']
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login}
+
+    arquitectura.login_failure_handler:
+        class: ArquitecturaBaseBundle\Listeners\TrazasListener
+        arguments: ['@administracion.traza', '@security.authorization_checker', '%traza_nivel%', '@security.token_storage']
+        tags:
+            - { name: kernel.event_listener, event: security.authentication.failure}
+
+    arquitectura.ruta_traza:
+        class: ArquitecturaBaseBundle\Listeners\TrazasListener
+        arguments: ['@administracion.traza', '@security.authorization_checker', '%traza_nivel%', '@security.token_storage']
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }
+
+

@@ -1,0 +1,22 @@
+
+agregar_plantilla:
+    path:     /agregarPlantilla
+    defaults:
+        _controller: ArquitecturaBaseBundle:Plantilla:agregarPlantilla
+        etiqueta: 'Agregar plantilla'
+        mostrarEnMenu: true
+
+mostrar_plantilla:
+    path:     /mostrarPlantilla/{idplantilla}
+    defaults:
+        _controller: ArquitecturaBaseBundle:Plantilla:mostrarPlantilla
+
+listar_plantillas:
+    path: /listarPlantillas
+    defaults:
+        _controller: ArquitecturaBaseBundle:Plantilla:listarPlantillas
+
+cargar_plantillas_ajax:
+    path: /load_ajax
+    defaults:
+        _controller: ArquitecturaBaseBundle:Plantilla:cargarPlantillasAjax

@@ -1,0 +1,24 @@
+#####################   Usuario #######################################################################
+usuario_agregar:
+    path: /usuario/agregar
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:crearUsuario
+        etiqueta: 'Crear un usuario'
+        mostrarEnMenu: true
+
+usuario_listar:
+    path: /usuario/listar
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:listarUsuarios
+        etiqueta: 'Listar usuarios'
+        mostrarEnMenu: true
+#POST
+usuario_eliminar:
+    path: /usuario/eliminar/{idusuario}
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:eliminarUsuario
+
+#####################   Fin de Usuario #################################################################
+
+
+

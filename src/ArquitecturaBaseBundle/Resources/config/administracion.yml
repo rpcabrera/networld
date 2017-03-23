@@ -1,0 +1,51 @@
+inicio_admin:
+    path: /inicio
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:index
+        etiqueta: 'Inicio Administracion'
+        mostrarEnMenu: true
+
+perfil:
+    path: /perfil
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:mostrarPerfil
+        etiqueta: 'Perfil'
+        mostrarEnMenu: true
+
+salir:
+    path: /salir
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:logout
+
+prueba:
+    path: /prueba
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:prueba
+
+#Importaciones
+
+usuarios:
+    resource: "@ArquitecturaBaseBundle/Resources/config/usuario.yml"
+
+roles:
+    resource: "@ArquitecturaBaseBundle/Resources/config/roles.yml"
+
+menu:
+    resource: "@ArquitecturaBaseBundle/Resources/config/menu.yml"
+
+plantilla:
+    resource: "@ArquitecturaBaseBundle/Resources/config/plantilla.yml"
+    prefix: /plantilla
+
+
+
+ejecutar_buscar_traza_ajax:
+    path: /ejecutar_buscar_traza_ajax
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:ejecutarBuscarTraza
+
+buscar_traza:
+    path: /buscar_traza
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:buscarTraza
+        etiqueta: 'Listar Traza'

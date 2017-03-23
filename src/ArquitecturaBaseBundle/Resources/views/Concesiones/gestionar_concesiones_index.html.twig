@@ -1,0 +1,96 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block titulo %}Gestionar concesiones{% endblock %}
+
+
+{% block stylesheets %}
+
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/jqgrid5.1.1/css/ui.jqgrid.css') }}" rel="stylesheet" media="screen"/>
+
+{% endblock %}
+
+{% block cuerpo %}
+
+    <div id="jqgrid" class="col-sm-12 col-md-12 col-lg-12">
+        <table id="grid"></table>
+        <div id="gridpager"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 align-right" style="margin-top: 2em;">
+        <button id="btnSeleccionar" class="btn btn-danger">Seleccionar</button>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/jquery/jquery-3.1.0.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/jqgrid5.1.1/js/i18n/grid.locale-es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/jqgrid5.1.1/js/jquery.jqGrid.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootbox.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+    <script type="application/javascript">
+        $(function(){
+            $("#grid").jqGrid({
+                url: "{{ path('cargar_usuarios_ajax') }}",
+                datatype: "json",
+                mtype: "POST",
+                colNames: ["Id", "Nombre", "Activo", "Descripcion", "Correo"],
+                //Recalcula el tamaño en dependencia de su contenedor
+                autowidth: true,
+                height: 180,
+                colModel: [
+                    { name: "id", width:50},
+                    { name: "nombre",width:250},
+                    { name: "activo", align: "center", width:50},
+                    { name: "descripcion", align: "center", width:250},
+                    { name: "correo", align: "center", width:250}
+                ],
+                pager: "#gridpager",
+                rowNum: 10,
+                rowList: [10, 20, 30,40,50],
+                sortname: "nombre",
+                sortorder: "desc",
+                viewrecords: true,
+                gridview: false,
+                autoencode: true,
+                caption: "Listado de usuarios"
+            });
+
+            $("#btnSeleccionar").on('click',function(){
+                var grid = $('#grid'),
+                        selRowId = grid.jqGrid ('getGridParam', 'selrow'),
+                        idUsuario = grid.jqGrid ('getCell', selRowId, 'id');
+                if (idUsuario === undefined){
+                    bootbox.alert({
+                        title: "Error",
+                        message: "Debe seleccionar un usuario para realizar la gestión de sus concesiones.",
+                        buttons: {
+                            ok : {
+                                label: 'Aceptar',
+                                className: "some-class",
+                                callback: function() {
+                                    alert("AAAA");
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    var ruta = Routing.generate('listar_concesiones', {
+                        idusuario: idUsuario
+                    });
+                    window.location.replace(ruta);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+

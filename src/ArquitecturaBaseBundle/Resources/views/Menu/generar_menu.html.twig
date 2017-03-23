@@ -1,0 +1,51 @@
+{% macro renderizarMenu(menu) %}
+    {% import _self as self %}
+
+    <li>
+    {# Es un menu con hijos #}
+    {% if menu.ruta is null %}
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-cog"></i>
+            <span class="menu-text">
+                {{ menu.etiqueta }}
+            </span>
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        {% if (menu.elementos|length > 0 ) %}
+            <b class="arrow"></b>
+            <ul class="submenu">
+                {% set submenus = menu.elementos %}
+                {% for submenu in submenus %}
+                    {{ self.renderizarMenu(submenu) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    {% else %}
+        {#Es un menu sin hijos #}
+        <li>
+            <a href="{{ path(menu.ruta) }}">
+                <i class="menu-icon fa fa-leaf"></i>
+                <span class="menu-text">
+                    {{ menu.etiqueta }}
+                </span>
+            </a>
+        </li>
+    {% endif %}
+
+{% endmacro %}
+
+
+{% import _self as self %}
+
+<ul class="nav nav-list">
+
+    {% for concesion in  concesiones %}
+
+        {% set menu = concesion.menu %}
+        {{ self.renderizarMenu(menu) }}
+
+    {% endfor %}
+
+</ul>

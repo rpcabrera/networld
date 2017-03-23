@@ -1,0 +1,13 @@
+arquitectura_base_homepage:
+    path:     /
+    defaults:
+        _controller: ArquitecturaBaseBundle:Default:index
+        etiqueta: 'Inicio'
+        mostrarEnMenu: true
+
+pruebas:
+    path: /pruebas
+    defaults:
+        _controller: ArquitecturaBaseBundle:Menu:test
+
+

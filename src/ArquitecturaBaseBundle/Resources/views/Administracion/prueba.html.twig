@@ -1,0 +1,71 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}"
+{% endblock %}
+
+
+
+{% block titulo %}<span>Pruebas</span>{% endblock %}
+
+{% block cuerpo %}
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="{{ form.campoFecha.vars.id }}">Fecha 1</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    {{ form_widget(form.campoFecha) }}
+                    <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-5 form-group">
+                <label for="fecha2">Fecha 2</label>
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" name="fecha2" id="fecha2"/>
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {#jQuery ya esta incluido#}
+    <script type="text/javascript" src="{{ asset('assets/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/moment/min/moment-with-locales.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    {# Plugin for transition.js is already included in boostrap #}
+    {# Plugin for collapse.js is already included in boostrap #}
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY',
+                useCurrent: true,
+                toolbarPlacement: 'top',
+                showTodayButton: true,
+                showClear: true,
+                showClose: true,
+                locale: 'ru'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'DD/MM/YYYY',
+                useCurrent: true,
+                toolbarPlacement: 'top',
+                showTodayButton: true,
+                showClear: true,
+                showClose: true,
+                minDate: new Date(1958, 0, 1)
+            });
+            $("#datetimepicker1").on("dp.change", function (e) {
+                $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+            });
+
+        });
+    </script>
+{% endblock %}
