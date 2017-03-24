@@ -12,6 +12,11 @@ usuario_listar:
         _controller: ArquitecturaBaseBundle:Administracion:listarUsuarios
         etiqueta: 'Listar usuarios'
         mostrarEnMenu: true
+
+load_ajax_usuario:
+    path: /usuario/load_ajax
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:loadAjaxUsuarios
 #POST
 usuario_eliminar:
     path: /usuario/eliminar/{idusuario}

@@ -3,7 +3,10 @@ services:
     security.role_hierarchy:
         class: ArquitecturaBaseBundle\Servicios\GestorJerarquiaRoles
         arguments: ['%security.role_hierarchy.roles%', '@service_container']
-
+    file_maganer:
+        class: ArquitecturaBaseBundle\Servicios\FileManager
+        arguments:
+            directorio_raiz_fotos: '%fotos_dir%'
 
 # Sevicios relacionados con las Gestoras #
     base.gestor:

@@ -15,3 +15,4 @@ parameters:
     usar_control_acceso: false
     # Valores permisibles: 'alto', 'medio', 'bajo', 'ninguno'
     traza_nivel: 'alto'
+    fotos_dir: "imagenesperfil"

@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html class="fuelux">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8">
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
     <title> {{ nombresitio }} </title>
 
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/bootstrap.min.css') }}" type="text/css">
@@ -15,6 +11,11 @@
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/ace-part2.min.css') }}" class="ace-main-stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/ace-admin/css/ace.min.css') }}" id="main-ace-style" class="ace-main-stylesheet"/>
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/cargando.css') }}"/>
+    <style>
+        p, body, span {
+            font-family: sans-serif;
+        }
+    </style>
     {% block stylesheets %}{% endblock %}
 
 </head>
@@ -31,10 +32,10 @@
     <div class="main-content">
         <div class="main-content-inner">
             <!-- Migas -->
-            <div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+            <div id="breadcrumbs" class="breadcrumbs">
                 <ul class="breadcrumb">
                     {% block miga %}
-                        {{miga(app.session.get('migas'))}}
+                    {{miga(app.session.get('migas'))}}
                     {% endblock %}
                 </ul>
             </div>

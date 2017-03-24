@@ -114,12 +114,34 @@ class AdministracionController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listarUsuariosAction(){
-        $em = $this->getDoctrine();
+        $em = $this->getEM();
         /** @var Usuario $usuarioAutenticado */
         $usuarioAutenticado = $this->getUser();
         $usuarios = $em->getRepository('ArquitecturaBaseBundle:Usuario')->listarExcepto($usuarioAutenticado->getId());
         return $this->render('@ArquitecturaBase/Administracion/listar_usuarios.html.twig', array(
             'usuarios' => $usuarios
+        ));
+    }
+
+
+    public function loadAjaxUsuariosAction(Request $request){
+        $em = $this->getEM();
+        $usuarioAutenticado = $this->getUser();
+        $usuarios = $em->getRepository('ArquitecturaBaseBundle:Usuario')->listarExcepto($usuarioAutenticado->getId());
+        $usuarios_array = array();
+        foreach ($usuarios as $u){
+            /** @var Usuario $u */
+            $usuarios_array[] = array(
+                'id' => $u->getId(),
+                'nombre' => $u->getNombre(),
+                'roles' => implode(', ',$u->getRoles()),
+                'estado' => $u->getActivo(),
+                'correo' => $u->getCorreo(),
+                'foto' => $this->get('file_maganer')->obtenerUrlFotoUsuario($u, $request)
+            );
+        }
+        return new JsonResponse(array(
+            'data' => $usuarios_array
         ));
     }
 

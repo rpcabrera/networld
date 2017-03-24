@@ -35,7 +35,7 @@ class UtilTwigExtension extends \Twig_Extension {
 
         foreach ($miga as $key => $item) {
             if ($length_miga > 1) {
-                $str .= '<li><a href="' . $item['ruta'] . '">' . $item['etiqueta'] . '</a></li>';
+                $str .= '<li ><a href="' . $item['ruta'] . '">' . $item['etiqueta'] . '</a></li>';
                 $length_miga--;
             } else {
                 $str .= '<li>'.$item['etiqueta'].'</li>';

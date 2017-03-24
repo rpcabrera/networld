@@ -1,14 +1,4 @@
-/*
- *@Author mibrito
- * cosas utiles para todos los sub-proyectos
- * cada funcion debe comenzar con el prefijo(namespace) "sit_utiles"
- * para evitar interferencias con futuras funciones implementadas
- */
-//declaracion de los namespace
-/**
- * Namespace para publicar funciones utiles de todo el proyecto
- */
-sit_utiles = {};
+utiles = {};
 var loadingStack = new Array();
 
 $(document).on('ready', function() {
@@ -47,10 +37,10 @@ $(document).on('ready', function() {
     }
     
     window.onbeforeunload = function() {
-        sit_utiles.DesabilitarElemento();
+        utiles.DesabilitarElemento();
     };
     window.onload = function() {
-        sit_utiles.HabilitarElemento();
+        utiles.HabilitarElemento();
     };
 
     jQuery.ajaxSetup({
@@ -63,13 +53,13 @@ $(document).on('ready', function() {
 
 $(document).ajaxSend(function(event, jqxhr, settings) {
     if (settings.type == "POST" || settings.type == "GET") {
-        sit_utiles.DesabilitarElemento();
+        utiles.DesabilitarElemento();
     }
 });
 
 $(document).ajaxComplete(function(event, jqxhr, settings) {
     if (settings.type == "POST" || settings.type == "GET") {
-        sit_utiles.HabilitarElemento();
+        utiles.HabilitarElemento();
     }
 });
 
@@ -78,14 +68,14 @@ $(document).ajaxComplete(function(event, jqxhr, settings) {
  * @param idelemento identificador del elemento a desabilitar
  * @constructor
  */
-sit_utiles.DesabilitarElemento = function(idelemento) {
+utiles.DesabilitarElemento = function(idelemento) {
     var elemento;
     if (idelemento == null) {
         elemento = $('#body_content');
     } else {
         elemento = $('#' + idelemento);
     }
-    $('#body_content').append('<div id="dvLoading">Cargando...</div>');
+    $('#body_content').append('<div id="dvLoading"></div>');
     elemento.addClass('disablingDiv');
     loadingStack.push('off');
 };
@@ -95,7 +85,7 @@ sit_utiles.DesabilitarElemento = function(idelemento) {
  * @param idelemento identificador del elemento a habilitar
  * @constructor
  */
-sit_utiles.HabilitarElemento = function(idelemento) {
+utiles.HabilitarElemento = function(idelemento) {
     loadingStack.pop();
     if (loadingStack.length == 0) {
         var elemento;
@@ -114,7 +104,7 @@ sit_utiles.HabilitarElemento = function(idelemento) {
  * @param idcomplemento identificador del componente a habilitar
  * @constructor
  */
-sit_utiles.DesabilitarComponente = function(idcomplemento) {
+utiles.DesabilitarComponente = function(idcomplemento) {
     var elemento = $('#' + idcomplemento);
     elemento.addClass('disablingWaitDiv');
 };
@@ -124,7 +114,7 @@ sit_utiles.DesabilitarComponente = function(idcomplemento) {
  * @param idcomplemento identificador del componente a habilitar
  * @constructor
  */
-sit_utiles.HabilitarComponente = function(idcomplemento) {
+utiles.HabilitarComponente = function(idcomplemento) {
     var elemento = $('#' + idcomplemento);
     elemento.removeClass('disablingWaitDiv');
 };
@@ -135,7 +125,7 @@ sit_utiles.HabilitarComponente = function(idcomplemento) {
  * @param url dirección de la petición.
  * @constructor
  */
-sit_utiles.ChangeUrl = function(page, url) {
+utiles.ChangeUrl = function(page, url) {
     if (typeof (history.pushState) != "undefined") {
         var obj = {Page: page, Url: url};
         history.pushState(obj, obj.Page, obj.Url);
@@ -150,15 +140,15 @@ sit_utiles.ChangeUrl = function(page, url) {
  * @param url dirección de la petición.
  * @constructor
  */
-sit_utiles.AjaxGetRequest = function(url, callback) {
+utiles.AjaxGetRequest = function(url, callback) {
     if('#' == url) {
         return;
     }
     
-    var url_ajax = sit_utiles.buildUrl(url, '_ajax', true);
+    var url_ajax = utiles.buildUrl(url, '_ajax', true);
     var $container = $("#ajax-update");
     $container.load(url_ajax, function(){
-        sit_utiles.ChangeUrl('SGBC', url);
+        utiles.ChangeUrl('networld', url);
         if(callback){
             callback();
         }
@@ -172,7 +162,7 @@ sit_utiles.AjaxGetRequest = function(url, callback) {
  * @param value valor del parametro a agregar.
  * @constructor
  */
-sit_utiles.buildUrl = function(base, key, value) {
+utiles.buildUrl = function(base, key, value) {
     var sep = (base.indexOf('?') > -1) ? '&' : '?';
     return base + sep + key + '=' + value;
-}
+};
