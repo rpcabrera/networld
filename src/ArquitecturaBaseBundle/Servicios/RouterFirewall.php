@@ -40,7 +40,7 @@ class RouterFirewall
         $em = $this->container->get('doctrine.orm.entity_manager');
         $concesionRepository = $em->getRepository('ArquitecturaBaseBundle:Concesion');
         $tienePermiso = $concesionRepository->buscarConcesionesParaUsuarioyRuta($usuario,$ruta);
-        return $tienePermiso;
+        return count($tienePermiso) > 0;
     }
 
 }

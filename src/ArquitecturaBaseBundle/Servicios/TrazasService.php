@@ -76,8 +76,9 @@ class TrazasService
         $traza->setMac(Funciones::getmac(Funciones::IpAddress()));
         $traza->setIp(Funciones::IpAddress());
         $traza->setRuta($ruta);
-        $this->getEm()->persist($traza);
-        $this->getEm()->flush();
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em->persist($traza);
+        $em->flush();
     }
     //</editor-fold>
 }

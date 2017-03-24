@@ -40,7 +40,7 @@
                             {#Getting the user's avatar#}
 
                             {% if app.user.foto is defined %}
-                                <img class="nav-user-photo" src="{{ asset(app.user.foto) }}" alt="Avatar" />
+                                <img class="nav-user-photo" src="{{ asset(fotos_dir ~'/'~ app.user.foto) }}" alt="Avatar" />
                             {% else %}
                                 <img class="nav-user-photo" src="{{ asset('assets/ace-admin/images/blank_user_icon.png') }}" alt="Avatar" />
                             {% endif %}

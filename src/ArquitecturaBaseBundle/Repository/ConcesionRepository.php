@@ -34,7 +34,7 @@ class ConcesionRepository extends EntityRepository
             ->setParameter('prmArrayRol',$roles)
         ;
         $concesiones = $qbConcesiones->getQuery()->getResult();
-        return count($concesiones) > 0;
+        return $concesiones;
     }
 
 

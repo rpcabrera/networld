@@ -408,7 +408,7 @@ class AdministracionController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function mostrarPerfilAction(){
-        return $this->render('@Administracion/Administracion/perfil.html.twig',array(
+        return $this->render('@ArquitecturaBase/Administracion/perfil.html.twig',array(
 
         ));
     }

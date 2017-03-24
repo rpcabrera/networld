@@ -12,7 +12,7 @@
     <div style="padding: 20px;">
         <div class="block" style="float: left; margin: 20px;">
             <span class="profile-picture">
-            <img src="{{ app.user.foto }}" alt="{{ app.user.nombre }}'s Avatar" class="img-responsive" id="avatar" width="128" height="128"/>
+            <img src="{{ asset(fotos_dir ~'/'~ app.user.foto) }}" alt="{{ app.user.nombre }}'s Avatar" class="img-responsive" id="avatar" width="128" height="128"/>
         </span>
         </div>
         <div class="profile-user-info profile-user-info-striped" style="float: left; width: 50%;">
