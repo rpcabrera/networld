@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 5432
+    database_name: networld
+    database_user: postgres
+    database_password: postgres
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: secretToken459
+
+    url_fotos: '%kernel.root_dir%/../web/imagenesperfil'
+    usar_control_acceso: false
+    # Valores permisibles: 'alto', 'medio', 'bajo', 'ninguno'
+    traza_nivel: 'alto'

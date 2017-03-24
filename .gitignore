@@ -1,38 +1,16 @@
 # -- Symfony3 -----------------------------------------
-app/bootstrap.php.cache
-app/bootstrap_cache.php.cache
-app/config/parameters.ini
-app/config/parameters.yml
-bin/cache/*
-bin/logs/*
-bin/session/*
-vendor/*
-web/bundles/*
-web/css/*
-web/js/*
-web/uploads/*
+vendor
+web/bundles
+var
+bin
 
 # Linux
 .*
 !.gitignore
 !.htaccess
 *~
-var/cache/dev/annotations/
-var/logs/
-vendor/
-var/cache/de_/
-var/cache/dev/appDevDebugProjectContainer.php
-var/cache/dev/appDevDebugProjectContainer.php.meta
-var/cache/dev/appDevDebugProjectContainer.xml
-var/cache/dev/appDevDebugProjectContainerCompiler.log
-var/cache/dev/appDevUrlGenerator.php
-var/cache/dev/appDevUrlGenerator.php.meta
-var/cache/dev/appDevUrlMatcher.php
-var/cache/dev/appDevUrlMatcher.php.meta
-var/cache/dev/classes.php
-var/cache/dev/classes.php.meta
-var/cache/dev/doctrine/
-var/cache/dev/profiler/
-var/cache/dev/twig/
-var/sessions/
-web/bundles/
+#phpunit.xml.dist
+#composer.json
+#composer.lock
+#LICENSE
+#README.md
