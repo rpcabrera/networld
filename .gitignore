@@ -1,6 +1,5 @@
 # -- Symfony3 -----------------------------------------
 vendor
-web/bundles
 var
 bin
 

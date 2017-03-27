@@ -4,12 +4,13 @@ imports:
     - { resource: services.yml }
 
 parameters:
-    locale: en
+    locale: es
     nombresitio: 'Networld'
 
 #Framework configuration
 framework:
-    secret:          "%secret%"
+    translator: ~
+    secret: "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~

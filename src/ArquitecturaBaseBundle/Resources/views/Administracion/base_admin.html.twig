@@ -5,28 +5,35 @@
     <title> {{ nombresitio }} </title>
 
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/bootstrap.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/ace-admin/font-awesome/4.2.0/css/font-awesome.min.css') }}"
+          type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/fonts/fonts.googleapis.com.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/ace-ie.min.css') }}" class="ace-main-stylesheet"/>
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/ace-part2.min.css') }}" class="ace-main-stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/ace-admin/css/ace.min.css') }}" id="main-ace-style" class="ace-main-stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/ace-admin/css/ace.min.css') }}" id="main-ace-style"
+          class="ace-main-stylesheet"/>
     <link rel="stylesheet" href="{{ asset('assets/ace-admin/css/cargando.css') }}"/>
     <style>
         p, body, span {
             font-family: sans-serif;
         }
+        {# Ocultar el icono de busqueda que sale incorrecto #}
+        .select2-search, .select2-search--inline {
+            display: none;
+        }
     </style>
+
     {% block stylesheets %}{% endblock %}
 
 </head>
-<body class="no-skin" >
+<body class="no-skin">
 <div id="body_content"></div>
 {# El navbar superior de la pagina#}
 {% include 'ArquitecturaBaseBundle:Default:navbar.html.twig' %}
 
 <div class="main-container container" id="main-container">
     {#Sidebar (menu lateral izquierdo#}
-        {% include 'ArquitecturaBaseBundle:Default:sidebar.html.twig' %}
+    {% include 'ArquitecturaBaseBundle:Default:sidebar.html.twig' %}
     {#Fin del Sidebar#}
 
     <div class="main-content">
@@ -35,7 +42,7 @@
             <div id="breadcrumbs" class="breadcrumbs">
                 <ul class="breadcrumb">
                     {% block miga %}
-                    {{miga(app.session.get('migas'))}}
+                        {{ miga(app.session.get('migas')) }}
                     {% endblock %}
                 </ul>
             </div>
@@ -44,34 +51,32 @@
 
             <div class="page-content">
                 <!-- titulo del cuerpo que puede ser remplazado en las plantillas-->
-                <div class="page-header">
-                    <h1>
-                        {% block titulo %}
-                            Página inicial de Administración
-                        {% endblock %}
-                    </h1>
-                </div>
                 <div class="row">
-                    <div class="col-xs-12">
+                    {% block mensajes %}
+                    {% endblock %}
+                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                         {% block cuerpo %}
 
                         {% endblock %}
                     </div>
                 </div>
 
+
             </div>
+
         </div>
     </div>
+</div>
 
 
-    {#comienza el footer#}
-        {% include 'ArquitecturaBaseBundle:Default:footer.html.twig' %}
-    {#termina el footer#}
+{#comienza el footer#}
+{% include 'ArquitecturaBaseBundle:Default:footer.html.twig' %}
+{#termina el footer#}
 
-    {#Boton de subir estatico#}
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
+{#Boton de subir estatico#}
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
 
 </div>
 
@@ -89,6 +94,33 @@
 <script type="text/javascript">
     if ('ontouchstart' in document.documentElement)
         document.write("<script src='{{ asset('assets/ace-admin/js/jquery.mobile.custom.min.js') }}'>" + "<" + "/script>");
+    //Configuraciones de idioma y propiedadees de componentes
+
+    //Datatables
+    var datatablesConfig = {
+        language : {
+            sLengthMenu: "Mostrar _MENU_ ",
+            sSearch: "Buscar:",
+            oPaginate: {
+                sPrevious: '<span class="glyphicon glyphicon-chevron-left"/>',
+                sNext: '<span class="glyphicon glyphicon-chevron-right"/>'
+            },
+            sInfoEmpty: "Mostrando 0 a 0 de 0 elementos",
+            sInfo: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+            sInfoFiltered: "(filtrado de _MAX_ elementos)",
+            sEmptyTable: "No hay datos disponibles",
+            sZeroRecords: "No hay datos disponibles",
+            "sProcessing": "Procesando información"
+        },
+        sorting: [[1, 'asc']],
+        viewValues: [
+            [5, 10, 15, 20, 100],
+            [5, 10, 15, 20, 100] // change per page values here
+        ],
+        displayLength : 10
+    };
+
+
 </script>
 {# Bloque de los Javascrips terceros a utilizar en las plantillas que hereden de esta #}
 {% block javascripts %}{% endblock %}
