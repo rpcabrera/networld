@@ -10,6 +10,7 @@ namespace ArquitecturaBaseBundle\Servicios;
 
 
 use ArquitecturaBaseBundle\Entity\Rol;
+use ArquitecturaBaseBundle\Repository\ConcesionRepository;
 use ArquitecturaBaseBundle\Entity\Usuario;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -38,6 +39,7 @@ class RouterFirewall
      */
     public function isRouteGrantedForUser($usuario, $ruta){
         $em = $this->container->get('doctrine.orm.entity_manager');
+        /**@var ConcesionRepository $concesionRepository */
         $concesionRepository = $em->getRepository('ArquitecturaBaseBundle:Concesion');
         $tienePermiso = $concesionRepository->buscarConcesionesParaUsuarioyRuta($usuario,$ruta);
         return count($tienePermiso) > 0;

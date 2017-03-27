@@ -21,6 +21,8 @@ prueba:
     path: /prueba
     defaults:
         _controller: ArquitecturaBaseBundle:Administracion:prueba
+        mostrarEnMenu: true
+        etiqueta: 'Prueba'
 
 #Importaciones
 

@@ -65,10 +65,14 @@ class MyRouterListener implements EventSubscriberInterface
 
         $usuario = $this->container->get('security.token_storage')->getToken()->getUser();
         $ruta = $event->getRequest()->get('_route');
+        //chequear que la ruta (buscada en el router) contenga el tag de seguimiento
+        $router = $this->container->get('router');
+        $routingPeticion = $router->matchRequest($event->getRequest());
 
         if ($usuario instanceof Usuario){
             $tienePermiso = $this->firewall->isRouteGrantedForUser($usuario,$ruta);
-            if (!$tienePermiso && $event->isMasterRequest()) throw new AccessDeniedException("No puede acceder a la ruta solicitada");
+            if (!$tienePermiso && $event->isMasterRequest() && array_key_exists('mostrarEnMenu',$routingPeticion))
+                throw new AccessDeniedException("No puede acceder a la ruta solicitada");
         }
     }
 
