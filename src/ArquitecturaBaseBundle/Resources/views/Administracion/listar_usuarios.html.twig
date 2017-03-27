@@ -1,47 +1,52 @@
 {% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}" />
+    <link href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block titulo %}
 
 {% endblock %}
-
+{% block mensajes %}
+    {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+{% endblock %}
 
 {% block cuerpo %}
+    <table class="table" id="tabla_usuarios">
+        <thead>
+        <tr>
+            <td>Foto</td>
+            <td>Nombre de usuario</td>
+            <td>Roles</td>
+            <td>Activo</td>
+            <td>Correo</td>
+            <td>Identificador</td>
+        </tr>
+        </thead>
 
-    <div class="row" style="min-height: 250px;">
-
-        <table class="table" id="tabla_usuarios">
-            <thead>
-                <tr>
-                    <td>Identificador</td>
-                    <td>Nombre de usuario</td>
-                    <td>Roles</td>
-                    <td>Activo</td>
-                    <td>Correo</td>
-                    <td>Foto</td>
-                </tr>
-            </thead>
-
-            <tfoot>
-                <tr>
-                    <td>Identificador</td>
-                    <td>Nombre de usuario</td>
-                    <td>Roles</td>
-                    <td>Activo</td>
-                    <td>Correo</td>
-                    <td>Foto</td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+        <tfoot>
+        <tr>
+            <td>Foto</td>
+            <td>Nombre de usuario</td>
+            <td>Roles</td>
+            <td>Activo</td>
+            <td>Correo</td>
+            <td>Identificador</td>
+        </tr>
+        </tfoot>
+    </table>
 
     <hr/>
 
-    <div class="row align-right">
-        <a class="btn btn-primary" href="{{ path('usuario_agregar') }}">Agregar</a>
+    <div class="align-right">
+        <a class="btn btn-sm btn-primary" href="{{ path('usuario_agregar') }}">Agregar</a>
     </div>
 
 {% endblock %}
@@ -49,8 +54,9 @@
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript">
-        $(function(){
-            $('#tabla_usuarios').DataTable({
+        var datatable = null;
+        $(function () {
+            datatable = $('#tabla_usuarios').DataTable({
                 ajax: {
                     url: "{{ path('load_ajax_usuario') }}",
                     type: "POST",
@@ -59,54 +65,90 @@
                 },
 
                 columns: [
-                    { data : "id" },
-                    { data : "nombre" },
-                    { data : "roles" },
-                    { data : "estado" },
-                    { data : "correo" },
-                    { data : "foto" }
+                    {data: "foto"},
+                    {data: "nombre"},
+                    {data: "roles"},
+                    {data: "estado"},
+                    {data: "correo"},
+                    {data: "id"}
                 ],
+                oLanguage: datatablesConfig.language,
+                aaSorting: datatablesConfig.sorting,
+                aLengthMenu: datatablesConfig.viewValues,
+                iDisplayLength: datatablesConfig.displayLength,
 
-
-                columnDefs: [ {
+                columnDefs: [{
                     //Renderizacion del campo de la foto
-                    targets: 5,
+                    targets: 0,
                     data: "foto",
-                    render: function ( data, type, full, meta ) {
-                        return '<img src="'+data+'" alt="Avatar" width="50" height="50" />';
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" alt="Avatar" width="50" height="50" />';
                     }
                 }, {
                     //Renderizacion del campo de activo
                     targets: 3,
                     data: "estado",
-                    render: function ( data, type, full, meta ) {
+                    render: function (data, type, full, meta) {
                         if (data)
-                            return '<span class="glyphicon glyphicon-ok"></span>';
+                            return 'Sí';
                         else
-                            return '<span class="glyphicon glyphicon-remove"></span>';
+                            return 'No';
                     }
-                } ],
-                oLanguage: {
-                    sLengthMenu: "Mostrar _MENU_ ",
-                    sSearch: "Buscar:",
-                    oPaginate: {
-                        sPrevious: '<span class="glyphicon glyphicon-chevron-left"/>',
-                        sNext: '<span class="glyphicon glyphicon-chevron-right"/>'
-                    },
-                    sInfoEmpty: "Mostrando 0 a 0 de 0 elementos",
-                    sInfo: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                    sInfoFiltered: "(filtrado de _MAX_ elementos)",
-                    sEmptyTable: "No hay datos disponibles",
-                    sZeroRecords: "No hay datos disponibles",
-                    "sProcessing": "Procesando información"
-                },
-                aaSorting: [[1, 'asc']],
-                aLengthMenu: [
-                    [5, 10, 15, 20, 100],
-                    [5, 10, 15, 20, 100] // change per page values here
-                ],
-                iDisplayLength: 10
-            } );
+                }, {
+                    targets: 5,
+                    data: "id",
+                    render: function (data, type, full, meta) {
+                        var template = '<div class="btn-group">' +
+                            '<button class="btn btn-xs btn-danger" onclick="eliminarUsuario('+data+');">' +
+                                '<i class="ace-icon fa fa-trash-o bigger-120"></i>' +
+                            '</button>' +
+                            '<button class="btn btn-xs btn-warning" onclick="modificarUsuario('+data+');">' +
+                                '<i class="ace-icon fa fa-pencil bigger-120"></i>' +
+                            '</button>' +
+                            '</div>';
+                        return template;
+                    }
+                }]
+
+            });
+
+
+            //Configuracion para que los mensajes de alerta se auto-desvanezcan
+            $(".alert-success").fadeTo(3000, 500).slideUp(1000, function(){
+                $(".alert-success").slideUp(500);
+            });
+
         });
+
+        function reloadDataTables(){
+            datatable.ajax.reload();
+        }
+
+        function eliminarUsuario(idusuario){
+            var dir = '{{ path('usuario_eliminar') }}';
+            var direccion = dir.replace('idusuarioX',idusuario);
+            console.log('Direccion: ',dir);
+            console.log('Id usuario: ',idusuario);
+            console.log('Direccion sustituida: ',direccion);
+            $.ajax({
+                url: direccion,
+                dataType: 'json',
+                data: {
+                    idusuario: idusuario,
+                    location: "Boston"
+                }
+            }).done(function(data){
+                console.log('Respuesta del envío: ');
+                console.log(data);
+                reloadDataTables();
+            });
+        }
+        function modificarUsuario(idusuario){
+            var dir = '{{ path('usuario_agregar') }}';
+            var direccion = dir.replace('idusuarioX',idusuario);
+            window.location = '{{ path() }}''
+            console.log('Modficar...'+idusuario);
+        }
+
     </script>
 {% endblock %}

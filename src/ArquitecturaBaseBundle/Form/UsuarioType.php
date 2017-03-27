@@ -24,17 +24,17 @@ class UsuarioType extends AbstractType
     {
         $builder
             ->add('nombre', TextType::class,array(
-                'required' => false
+                'required' => true
             ))
             ->add('password', PasswordType::class,array(
-                'required' => false
+                'required' => true
             ))
             ->add('roles',EntityType::class,array(
                 'class' => 'ArquitecturaBaseBundle\Entity\Rol',
                 'choice_label' => 'nombre',
                 'multiple' => true,
                 'expanded' => false,
-                'required' => false
+                'required' => true
             ))
             ->add('activo',CheckboxType::class, array(
                 'data' => true,
@@ -44,10 +44,10 @@ class UsuarioType extends AbstractType
                 'required' => false
             ))
             ->add('correo', EmailType::class,array(
-                'required' => false
+                'required' => true
             ))
             ->add('foto',FileType::class, array(
-                'required' => false,
+                'required' => true,
                 'label' => 'Imagen de perfil'
             ))
             ->add('save',SubmitType::class, array(

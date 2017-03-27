@@ -6,6 +6,11 @@ usuario_agregar:
         etiqueta: 'Crear un usuario'
         mostrarEnMenu: true
 
+usuario_modificar:
+    path: /usuario/modificar/{idusuario}
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:modificarUsuario
+
 usuario_listar:
     path: /usuario/listar
     defaults:
@@ -19,7 +24,7 @@ load_ajax_usuario:
         _controller: ArquitecturaBaseBundle:Administracion:loadAjaxUsuarios
 #POST
 usuario_eliminar:
-    path: /usuario/eliminar/{idusuario}
+    path: /usuario/eliminar
     defaults:
         _controller: ArquitecturaBaseBundle:Administracion:eliminarUsuario
 

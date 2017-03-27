@@ -1,4 +1,6 @@
-etiquetas:
-    traza.listar: List traces
+prueba2: Esta es una prueba 2
 
-
+gestion_usuarios:
+    mensajes:
+        exito_adicion: El usuario ha sido agregado satisfactoriamente
+        exito_eliminacion: El usuario ha sido eliminado satisfactoriamente

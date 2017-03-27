@@ -1,2 +1,8 @@
-etiquetas:
-    traza.listar: Listar trazas
+prueba2: Esta es una prueba 2
+
+gestion_usuarios:
+    mensajes:
+        exito_adicion: El usuario ha sido agregado satisfactoriamente
+        exito_eliminacion: El usuario ha sido eliminado satisfactoriamente
+        error_adicion: El usuariuo ...
+        error_eliminacion: El usuario no ha sido eliminado. Verifique a su administrador

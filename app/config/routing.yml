@@ -19,7 +19,3 @@ login:
         _controller: ArquitecturaBaseBundle:Autenticacion:login
 logout:
     path: /logout
-
-#Libreria de FOS JS Routing Generator: Generacion de rutas mediante JavaScript
-fos_js_routing_js:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
