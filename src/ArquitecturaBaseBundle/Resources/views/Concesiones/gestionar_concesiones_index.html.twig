@@ -89,13 +89,12 @@
                     targets: 6,
                     data: "idrol",
                     render: function (data, type, full, meta) {
+                        var direccion = '{{ path('gestionar_concesion_rol', {'idrol' : '_ROL'} ) }}';
+                        direccion = direccion.replace('_ROL',data);
                         var template = '<div class="btn-group">' +
-                            '<button class="btn btn-xs btn-danger" onclick="funcionX('+data+');">' +
+                            '<a class="btn btn-xs btn-danger" href="'+direccion+'">' +
                             '<i class="ace-icon fa fa-trash-o bigger-120"></i>' +
-                            '</button>' +
-                            '<button class="btn btn-xs btn-warning" onclick="funcionY('+data+');">' +
-                            '<i class="ace-icon fa fa-pencil bigger-120"></i>' +
-                            '</button>' +
+                            '</a>'+
                             '</div>';
                         return template;
                     }

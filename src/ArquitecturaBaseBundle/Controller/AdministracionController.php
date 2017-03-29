@@ -2,20 +2,10 @@
 
 namespace ArquitecturaBaseBundle\Controller;
 
-use ArquitecturaBaseBundle\Entity\Adapters\UsuarioAjaxAdapter;
 use ArquitecturaBaseBundle\Entity\Concesion;
-use ArquitecturaBaseBundle\Entity\Menu;
 use ArquitecturaBaseBundle\Entity\Rol;
 use ArquitecturaBaseBundle\Entity\Usuario;
-use ArquitecturaBaseBundle\Entity\Visual\BuscarTraza;
-use ArquitecturaBaseBundle\Form\BuscarTrazaType;
-use ArquitecturaBaseBundle\Form\ConcesionType;
-use ArquitecturaBaseBundle\Form\MenuType;
-use ArquitecturaBaseBundle\Form\RolType;
 use ArquitecturaBaseBundle\Gestores\AdministracionGtr;
-use ArquitecturaBaseBundle\Servicios\TrazasService;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdministracionController extends BaseController
 {

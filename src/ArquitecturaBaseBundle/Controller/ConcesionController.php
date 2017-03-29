@@ -50,6 +50,30 @@ class ConcesionController extends BaseController
 
     public function gestionarConcesionesAction(){
         return $this->render('ArquitecturaBaseBundle:Concesiones:gestionar_concesiones_index.html.twig', array(
+
+        ));
+    }
+
+    /**
+     * Muestra la interfaz de gestion de concesiones dada la seleccion de un rol
+     * @param $idrol
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function gestionarAction($idrol)
+    {
+        $em = $this->getEM();
+        $rol = $em->getRepository('ArquitecturaBaseBundle:Rol')->find($idrol);
+        return $this->render('@ArquitecturaBase/Concesiones/gestionar_concesiones_rol.html.twig',array(
+            'idrol' => $idrol,
+            'rol_name' => $rol->getNombre()
+        ));
+    }
+
+    public function loadAjaxAction($idrol)
+    {
+        $result = $this->get('administracion.generador_arbol')->generarArbolMenu($idrol);
+        return new JsonResponse(array(
+            'menus' => $result
         ));
     }
 
@@ -67,17 +91,6 @@ class ConcesionController extends BaseController
         return new JsonResponse($usuariosArray);
     }
 
-    /**
-     * @param $idusuario
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listarConcesionesDeUsuarioAction($idusuario){
-        $concesiones = $this->getAdministracionGtr()
-            ->listarConcesionesDeUsuario($idusuario);
-        return $this->render('@ArquitecturaBase/Concesiones/concesiones_usuario.html.twig',array(
-
-        ));
-    }
 
     /**
      *
@@ -85,4 +98,5 @@ class ConcesionController extends BaseController
     public function eliminarConcesionAction(){
 
     }
+
 }

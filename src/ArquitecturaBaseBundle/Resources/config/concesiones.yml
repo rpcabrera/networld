@@ -5,13 +5,6 @@ gestionar_concesiones_inicio:
         etiqueta: 'Listar menus sin concesiones'
         mostrarEnMenu: true
 
-listar_concesiones:
-    path: /listar
-    defaults:
-        _controller: ArquitecturaBaseBundle:Concesion:listarConcesionesDeUsuario
-        etiqueta: 'Listar concesiones de usuario'
-        mostrarEnMenu: true
-
 crear_concesion:
     path: /crear/{idmenu}
     defaults:
@@ -20,6 +13,19 @@ crear_concesion:
         etiqueta: 'Agregar nueva concesión'
         mostrarEnMenu: true
 
+gestionar_concesion_rol:
+    path: /gestionar/{idrol}
+    defaults:
+        _controller: ArquitecturaBaseBundle:Concesion:gestionar
+        idrol: -1
+
+concesiones_load_ajax:
+    path: /load_ajax/{idrol}
+    defaults:
+        _controller: ArquitecturaBaseBundle:Concesion:loadAjax
+        idrol : null
+
+#AJAX
 cargar_usuarios_ajax:
     path: /cargarUsuariosAjax
     defaults:

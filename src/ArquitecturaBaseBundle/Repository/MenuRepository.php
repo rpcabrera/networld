@@ -46,6 +46,15 @@ class MenuRepository extends EntityRepository
         return $qb;
     }
 
+    public function listarMenusPadres(){
+    $qb = $this->getEntityManager()->createQueryBuilder();
+    $qb->select('menu')
+        ->from('ArquitecturaBaseBundle:Menu','menu')
+        ->andWhere($qb->expr()->isNull('menu.padre'))
+    ;
+    return $qb->getQuery()->getResult();
+}
+
     public function listarMenus(){
         $menus = $this->findAll();
         return $menus;

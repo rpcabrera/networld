@@ -1,0 +1,112 @@
+{% extends "ArquitecturaBaseBundle:Administracion:base_admin.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/bootstrap-treeview-master/public/css/bootstrap-treeview.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block cuerpo %}
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="widget-box widget-color-blue2">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">Concesiones para el rol {{ rol_name }}</h4>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main padding-10">
+                    <div id="tree1" class="tree"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+         <div class="widget-box widget-color-grey">
+             <div class="widget-header">
+                 <h4 class="widget-title lighter smaller">
+                     <h4>Descripcion para el menu: <span id="menu_name"></span></h4>
+                 </h4>
+             </div>
+         </div>
+     </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {#<script type="text/javascript" src="{{ asset('assets/bootstrap-3.3.4/js/bootstrap.min.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-treeview-master/tests/lib/bootstrap-treeview.js') }}"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            $("#menu_name").hide();
+            //Cargar los roles
+            $.ajax({
+                url: '{{ path('concesiones_load_ajax', {'idrol': idrol}) }}'
+            })
+            .done(function( data ) {
+                $('#tree1').treeview({
+                    data: data.menus,
+                    showCheckbox: true
+                }).on('nodeChecked', function(event, node){
+                    var espadrevacio = comprobarPadreVacio(node);
+                    if (espadrevacio){
+                        unCheckParent(node);
+                    }else{
+                        checkParent(node);
+                    }
+                }).on('nodeUnchecked', function(event, node){
+                    var espadrevacio = comprobarPadreVacio(node);
+                    if (espadrevacio){
+                        unCheckParent(node);
+                    }else{
+                        checkParent(node);
+                    }
+                }).on('nodeSelected', function(event, node){
+                }).on('nodeUnselected', function(event, node){
+                });
+            });
+        });
+
+        function toggleDescription(nodo){
+            var nodos = $('#tree1').treeview('getSelected');
+            console.log(nodos);
+            console.log(typeof nodos);
+            var hermanos = $('#tree1').treeview('getSiblings', nodo);
+            console.log('Hermanos',hermanos);
+//            comprobarPadreVacio(nodo);
+        }
+
+        function comprobarPadreVacio(node){
+            console.log('comprobarPadreVacio');
+            console.log(node);
+            var hermanos = $('#tree1').treeview('getSiblings', node);
+            var isEmpty = true;
+            if ( node.state.checked == true )
+                isEmpty = false;
+            $.each(hermanos, function(index, hermano){
+                 if (hermano.state.checked == true){
+                    isEmpty = false;
+                 }
+            });
+            return isEmpty;
+
+        }
+        function unCheckParent(node){
+            var tree = $('#tree1');
+            var padre = tree.treeview('getParent', node);
+            //Llamada recursiva
+            if (padre.hasOwnProperty('state')){
+                unCheckParent(padre);
+                tree.treeview('uncheckNode', [ padre, { silent: true } ]);
+            }
+        }
+        function checkParent(node){
+            var tree = $('#tree1');
+            var padre = tree.treeview('getParent', node);
+            if (padre.hasOwnProperty('parentId')){
+                unCheckParent(padre);
+                tree.treeview('checkNode', [ padre, { silent: true } ]);
+            }
+
+        }
+    </script>
+{% endblock %}
