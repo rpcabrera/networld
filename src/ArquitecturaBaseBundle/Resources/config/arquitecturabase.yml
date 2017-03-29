@@ -5,9 +5,26 @@ arquitectura_base_homepage:
         etiqueta: 'Inicio'
         mostrarEnMenu: true
 
-pruebas:
-    path: /pruebas
+perfil:
+    path: /perfil
     defaults:
-        _controller: ArquitecturaBaseBundle:Menu:test
+        _controller: ArquitecturaBaseBundle:Administracion:mostrarPerfil
+        etiqueta: 'Perfil'
+        mostrarEnMenu: true
 
+salir:
+    path: /salir
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:salir
 
+prueba:
+    path: /prueba
+    defaults:
+        _controller: ArquitecturaBaseBundle:Administracion:prueba
+        mostrarEnMenu: false
+        etiqueta: 'Prueba'
+
+#Importaciones
+administracion:
+    resource: "@ArquitecturaBaseBundle/Resources/config/administracion.yml"
+    prefix: /administracion

@@ -1,49 +1,20 @@
-#####################   Gestion del Menu ###############################################################
-gestionar_concesiones_inicio:
-    path: /concesion/inicio
-    defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:gestionarConcesiones
-        etiqueta: 'Listar menus sin concesiones'
-        mostrarEnMenu: true
-
-cargar_usuarios_ajax:
-    path: /concesion/cargarUsuariosAjax
-    defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:cargarUsuariosAjax
-
-listar_concesiones:
-    path: /concesion/listar
-    defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:listarConcesionesDeUsuario
-        etiqueta: 'Listar concesiones de usuario'
-        mostrarEnMenu: true
-
-crear_concesion:
-    path: /concesion/crear/{idmenu}
-    defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:crearConcesion
-        idmenu: -1
-        etiqueta: 'Agregar nueva concesión'
-        mostrarEnMenu: true
-
 gestionar_menus:
-    path: /menu/gestionar
+    path: /gestionar
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:listarMenus
+        _controller: ArquitecturaBaseBundle:Menu:listarMenus
         etiqueta: "Listar Menus"
         mostrarEnMenu: true
         padre:
             - 'arquitectura_base_homepage'
 
 cargar_menus_ajax:
-    path: /menu/listarajax
+    path: /listarajax
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:cargarMenusAjax
-
+        _controller: ArquitecturaBaseBundle:Menu:cargarMenusAjax
 
 crear_menu:
-    path: /menu/crear
+    path: /crear
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:crearMenu
+        _controller: ArquitecturaBaseBundle:Menu:crearMenu
         etiqueta: 'Crear Menu'
         mostrarEnMenu: true

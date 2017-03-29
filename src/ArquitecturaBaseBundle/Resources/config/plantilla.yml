@@ -1,4 +1,3 @@
-
 agregar_plantilla:
     path:     /agregarPlantilla
     defaults:

@@ -1,34 +1,32 @@
-#####################   Usuario #######################################################################
 usuario_agregar:
-    path: /usuario/agregar
+    path: /agregar
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:crearUsuario
+        _controller: ArquitecturaBaseBundle:Usuario:crearUsuario
         etiqueta: 'Crear un usuario'
         mostrarEnMenu: true
 
 usuario_modificar:
-    path: /usuario/modificar/{idusuario}
+    path: /modificar/{idusuario}
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:modificarUsuario
+        _controller: ArquitecturaBaseBundle:Usuario:modificarUsuario
 
 usuario_listar:
-    path: /usuario/listar
+    path: /listar
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:listarUsuarios
+        _controller: ArquitecturaBaseBundle:Usuario:listarUsuarios
         etiqueta: 'Listar usuarios'
         mostrarEnMenu: true
 
 load_ajax_usuario:
-    path: /usuario/load_ajax
+    path: /load_ajax
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:loadAjaxUsuarios
-#POST
-usuario_eliminar:
-    path: /usuario/eliminar
-    defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:eliminarUsuario
+        _controller: ArquitecturaBaseBundle:Usuario:loadAjaxUsuarios
 
-#####################   Fin de Usuario #################################################################
+usuario_eliminar:
+    path: /eliminar
+    defaults:
+        _controller: ArquitecturaBaseBundle:Usuario:eliminarUsuario
+
 
 
 

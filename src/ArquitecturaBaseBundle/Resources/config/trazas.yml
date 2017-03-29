@@ -1,0 +1,10 @@
+ejecutar_buscar_traza_ajax:
+    path: /ejecutar_buscar_traza_ajax
+    defaults:
+        _controller: ArquitecturaBaseBundle:Traza:ejecutarBuscarTraza
+
+buscar_traza:
+    path: /buscar_traza
+    defaults:
+        _controller: ArquitecturaBaseBundle:Traza:buscarTraza
+        etiqueta: 'Listar Traza'

@@ -13,7 +13,6 @@ use ArquitecturaBaseBundle\Entity\Traza;
 use ArquitecturaBaseBundle\Entity\Usuario;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class TrazasService
@@ -62,7 +61,7 @@ class TrazasService
     /**
      * Este método registra la traza dado los parametros especificados.
      * @param $traza Traza
-     * @param DateTime $fecha
+     * @param \DateTime $fecha
      * @param string $accion
      * @param Usuario $usuario
      * @param null $ruta
@@ -80,5 +79,6 @@ class TrazasService
         $em->persist($traza);
         $em->flush();
     }
+
     //</editor-fold>
 }

@@ -8,11 +8,6 @@ arquitectura_base:
     resource: "@ArquitecturaBaseBundle/Resources/config/arquitecturabase.yml"
     prefix:   /base
 
-administracion:
-    resource: "@ArquitecturaBaseBundle/Resources/config/administracion.yml"
-    prefix:   /administracion
-
-
 login:
     path: /login
     defaults:

@@ -1,26 +1,28 @@
-#####################   Rol   ##########################################################################
 crear_rol:
-    path: /rol/crear
+    path: /crear
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:crearRol
+        _controller: ArquitecturaBaseBundle:Rol:crearRol
         etiqueta: 'Crear nuevo rol'
         mostrarEnMenu: true
 
 listar_rol:
-    path: /rol/listar
+    path: /listar
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:listarRoles
+        _controller: ArquitecturaBaseBundle:Rol:listarRoles
         etiqueta: 'Listar rol'
         mostrarEnMenu: true
 #AJAX
 generar_arbol_roles:
-    path: /rol/arbol
+    path: /arbol
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:buscarRolesHijosDeRol
+        _controller: ArquitecturaBaseBundle:Rol:buscarRolesHijosDeRol
 #AJAX
 arbol_nodo_informacion:
-    path: /rol/nodo/informacion
+    path: /nodo/informacion
     defaults:
-        _controller: ArquitecturaBaseBundle:Administracion:informacionNodoRol
+        _controller: ArquitecturaBaseBundle:Rol:informacionNodoRol
 
-#####################   Fin de Rol   ###################################################################
+load_ajax_roles:
+    path: /roles_load_ajax
+    defaults:
+        _controller: ArquitecturaBaseBundle:Rol:loadAjax

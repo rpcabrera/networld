@@ -34,7 +34,7 @@ security:
                 login_path: login
                 check_path: login
                 failure_path: login
-                default_target_path: /administracion/inicio
+                default_target_path: /base/administracion/inicio
                 always_use_default_target_path: true
             logout:
                 path:   salir

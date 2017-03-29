@@ -5,7 +5,7 @@
     {# Es un menu con hijos #}
     {% if menu.ruta is null %}
         <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-cog"></i>
+            <i class="menu-icon glyphicon {{ menu.icono }}"></i>
             <span class="menu-text">
                 {{ menu.etiqueta }}
             </span>

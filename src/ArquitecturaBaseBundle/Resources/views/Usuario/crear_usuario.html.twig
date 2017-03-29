@@ -5,12 +5,10 @@
 
 {% endblock %}
 
-
-
 {% block titulo %}Agregar nuevo usuario{% endblock %}
 
 {% block cuerpo %}
-    {{ form_start(form, {'attr': {'validate':'true', 'role' : 'form'} }) }}
+    {{ form_start(form, {'attr': {'validate':'novalidate'} }) }}
 
     <div class="col-col-sm-12 col-lg-12 col-md-12 " style="border-bottom: 1px dotted #e2e2e2; margin-bottom: 10px;">
 
@@ -18,11 +16,8 @@
             <label class="col-sm-3 control-label no-padding-right" for="{{ form.nombre.vars.id }}">
                 Nombre de usuario
             </label>
-            <div class="col-sm-3">
+            <div class="col-sm-9">
                 {{ form_widget(form.nombre) }}
-            </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.nombre, {'attr': {'class' : 'alert alert-danger'}}) }}
             </div>
         </div>
 
@@ -33,9 +28,6 @@
             <div class="col-sm-5">
                 {{ form_widget(form.password) }}
             </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.password, {'attr': {'class' : 'alert alert-danger'}}) }}
-            </div>
         </div>
 
         <div class="form-group">
@@ -44,9 +36,6 @@
             </label>
             <div class="col-sm-5">
                 {{ form_widget(form.roles) }}
-            </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.roles, {'attr': {'class' : 'alert alert-danger'}}) }}
             </div>
         </div>
 
@@ -57,9 +46,6 @@
             <div class="col-sm-5">
                 {{ form_widget(form.activo) }}
             </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.activo, {'attr': {'class' : 'alert alert-danger'}}) }}
-            </div>
         </div>
 
         <div class="form-group">
@@ -69,9 +55,6 @@
             <div class="col-sm-5">
                 {{ form_widget(form.descripcion) }}
             </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.descripcion, {'attr': {'class' : 'alert alert-danger'}}) }}
-            </div>
         </div>
 
         <div class="form-group">
@@ -80,9 +63,6 @@
             </label>
             <div class="col-sm-5">
                 {{ form_widget(form.correo) }}
-            </div>
-            <div class="col-sm-5 col-lg-5 col-md-5 ">
-                {{ form_errors(form.correo, {'attr': {'class' : 'alert alert-danger'}}) }}
             </div>
         </div>
 
@@ -104,7 +84,6 @@
 
     {{ form_end(form) }}
 
-
 {% endblock %}
 
 {% block javascripts %}
@@ -115,6 +94,22 @@
             $("#{{ form.roles.vars.id }}").select2({
                 language: 'es',
                 minimumResultsForSearch: Infinity
+            });
+            $("#{{ form.foto.vars.id }}").ace_file_input({
+                allowExt:  ['jpg', 'jpeg', 'png'],
+                thumbnail: 'fit', //small, large or fit cuando style = "well"
+                no_file: 'Seleccione un fichero...',
+                btn_choose: 'Seleccionar',
+                btn_change: 'Cambiar',
+                style: 'well',
+                icon_remove: 'fa fa-trash-o',
+                maxSize: 100000, //~100 KB
+                allowMime: ['image/jpg', 'image/jpeg', 'image/png'],
+            });
+            $("#{{ form.vars.id }}").validate({
+                submitHandler: function(form) {
+                    form.submit();
+                }
             });
         });
     </script>
