@@ -65,7 +65,6 @@ class TreeGenerator
         /** @var AdministracionGtr $gtr */
         $gtr = $this->container->get('administracion.gestor');
         $tieneConcesion = $gtr->comprobarExisteConcesion($menu, $rol);
-
         return array(
             'text' => $menu->getEtiqueta(),
             'icon' => 'glyphicon '.$menu->getIcono(),

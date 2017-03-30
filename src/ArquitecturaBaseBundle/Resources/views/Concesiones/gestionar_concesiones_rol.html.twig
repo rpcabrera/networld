@@ -12,14 +12,20 @@
                 <h4 class="widget-title lighter smaller">Concesiones para el rol {{ rol_name }}</h4>
             </div>
             <div class="widget-body">
-                <div class="widget-main padding-10">
+                <div class="widget-main">
                     <div id="tree1" class="tree"></div>
+                </div>
+                <div class="widget-toolbox clearfix">
+                    <button id="btnSaveConcesiones" class="btn btn-xs btn-success pull-right">
+                        <i class="ace-icon glyphicon glyphicon-save"></i>
+                        <span class="bigger-110">Guardar cambios</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-         <div class="widget-box widget-color-grey">
+         <div id="widgetDescripcion" class="widget-box widget-color-grey">
              <div class="widget-header">
                  <h4 class="widget-title lighter smaller">
                      <h4>Descripcion para el menu: <span id="menu_name"></span></h4>
@@ -35,78 +41,90 @@
     {#<script type="text/javascript" src="{{ asset('assets/bootstrap-3.3.4/js/bootstrap.min.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('assets/bootstrap-treeview-master/tests/lib/bootstrap-treeview.js') }}"></script>
     <script type="text/javascript">
-
+        var tree = null;
+        var widgetDescripcion = $("#widgetDescripcion");
         $(function(){
-            $("#menu_name").hide();
+            widgetDescripcion.hide();
             //Cargar los roles
             $.ajax({
                 url: '{{ path('concesiones_load_ajax', {'idrol': idrol}) }}'
             })
             .done(function( data ) {
-                $('#tree1').treeview({
-                    data: data.menus,
-                    showCheckbox: true
-                }).on('nodeChecked', function(event, node){
-                    var espadrevacio = comprobarPadreVacio(node);
-                    if (espadrevacio){
-                        unCheckParent(node);
-                    }else{
-                        checkParent(node);
-                    }
-                }).on('nodeUnchecked', function(event, node){
-                    var espadrevacio = comprobarPadreVacio(node);
-                    if (espadrevacio){
-                        unCheckParent(node);
-                    }else{
-                        checkParent(node);
-                    }
-                }).on('nodeSelected', function(event, node){
-                }).on('nodeUnselected', function(event, node){
+                tree = $('#tree1').treeview({
+                    data : data.menus,
+                    showCheckbox: true,
+                    showBorder: true
+                })
+                    .on('nodeChecked', onCheckNode )
+                    .on('nodeUnchecked', onUnCheckNode)
+                    .on('nodeSelected', function(event, node){
+                        $("#menu_name").text(node.text);
+                        widgetDescripcion.show();
                 });
+                tree.treeview('collapseAll',{ silent: true });
             });
+            $("#btnSaveConcesiones").on('click', saveConcesiones);
         });
 
-        function toggleDescription(nodo){
-            var nodos = $('#tree1').treeview('getSelected');
-            console.log(nodos);
-            console.log(typeof nodos);
-            var hermanos = $('#tree1').treeview('getSiblings', nodo);
-            console.log('Hermanos',hermanos);
-//            comprobarPadreVacio(nodo);
+        function onCheckNode(event, node){
+            if (!isLeaf(node)){
+                var childNodes = node.nodes;
+                var hasSelkectedOne = false;
+                $.each(childNodes, function(index, childNode){
+                    if (childNode.state.checked)
+                        hasSelkectedOne = true;
+                });
+                if (!hasSelkectedOne){
+                    $.each(childNodes, function(index, childNode){
+                        tree.treeview('checkNode', [ childNode.nodeId , { silent: false } ]);
+                    });
+                }
+            }
+            if (hasParent(node)){
+                var parent =  tree.treeview('getParent', node);
+                tree.treeview('checkNode', [ parent.nodeId, { silent: false } ]);
+            }
         }
-
-        function comprobarPadreVacio(node){
-            console.log('comprobarPadreVacio');
-            console.log(node);
-            var hermanos = $('#tree1').treeview('getSiblings', node);
-            var isEmpty = true;
-            if ( node.state.checked == true )
-                isEmpty = false;
-            $.each(hermanos, function(index, hermano){
-                 if (hermano.state.checked == true){
+        function onUnCheckNode(event, node){
+            //Verificar hacia abajo
+            if (!isLeaf(node)){
+                var childNodes = node.nodes;
+                $.each(childNodes, function(index, childNode){
+                    tree.treeview('uncheckNode', [ childNode.nodeId, { silent: false } ]);
+                });
+            }else{
+                tree.treeview('uncheckNode', [ node.nodeId, { silent: false } ]);
+            }
+            //Verificar hacia arriba
+            if (hasParent(node)){
+                var parent =  tree.treeview('getParent', node);
+                var bros = tree.treeview('getSiblings', node);
+                var isEmpty = true;
+                if ( node.state.checked == true )
                     isEmpty = false;
-                 }
-            });
-            return isEmpty;
-
-        }
-        function unCheckParent(node){
-            var tree = $('#tree1');
-            var padre = tree.treeview('getParent', node);
-            //Llamada recursiva
-            if (padre.hasOwnProperty('state')){
-                unCheckParent(padre);
-                tree.treeview('uncheckNode', [ padre, { silent: true } ]);
+                $.each(bros, function(index, bro){
+                    if (bro.state.checked == true){
+                        isEmpty = false;
+                    }
+                });
+                if (isEmpty)
+                    tree.treeview('uncheckNode', [ parent.nodeId , { silent: false } ]);
             }
         }
-        function checkParent(node){
-            var tree = $('#tree1');
-            var padre = tree.treeview('getParent', node);
-            if (padre.hasOwnProperty('parentId')){
-                unCheckParent(padre);
-                tree.treeview('checkNode', [ padre, { silent: true } ]);
-            }
 
+        function isLeaf(node){
+            return !hasChilds(node);
         }
+        function hasChilds(node){
+            return node.hasOwnProperty('nodes');
+        }
+        function hasParent(node){
+            return node.hasOwnProperty('parentId');
+        }
+
+        function saveConcesiones(event){
+            tree.treeview('')
+        }
+
     </script>
 {% endblock %}
