@@ -1,12 +1,12 @@
 # -- Symfony3 -----------------------------------------
-vendor
-var
-bin
+#vendor
+#var
+#bin
 
 # Linux
 .*
-!.gitignore
-!.htaccess
+#!.gitignore
+#!.htaccess
 *~
 #phpunit.xml.dist
 #composer.json
