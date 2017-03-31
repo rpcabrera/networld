@@ -122,8 +122,57 @@
             return node.hasOwnProperty('parentId');
         }
 
+        function getRootNodes(){
+            var rootNode = tree.treeview('getNode',0);
+            var nodes = tree.treeview('getSiblings', rootNode);
+            nodes.push(rootNode);
+            return nodes;
+        }
+
+        function getCheckedNodes(){
+            var checkedNodes = [];
+            var rootNodes = getRootNodes();
+            $.each(rootNodes, function(index, rootNode){
+                var rootCheckedNodes = getCheckedNodesRecursive(rootNode);
+                checkedNodes = $.merge(checkedNodes,rootCheckedNodes);
+            });
+            return checkedNodes;
+        }
+
+        function getCheckedNodesRecursive(node){
+            var checkedNodes = [];
+            if (!isLeaf(node)){
+                if (node.state.checked)
+                    checkedNodes.push(node);
+
+                var childNodes = node.nodes;
+                $.each(childNodes, function(index, childNode){
+                    var checkedChildNodes = getCheckedNodesRecursive(childNode);
+                    checkedNodes = $.merge(checkedNodes, checkedChildNodes);
+                });
+            }else{
+                if (node.state.checked)
+                    checkedNodes.push(node);
+            }
+            return checkedNodes;
+        }
+
         function saveConcesiones(event){
-            tree.treeview('')
+            var checkedNodes = getCheckedNodes();
+            var idMenus = [];
+            $.each(checkedNodes, function(index, node){
+                idMenus.push(node.idNodo);
+            });
+            $.ajax({
+                url: '{{ path('concesiones_modificar') }}',
+                data: {
+                    'idrol' : '{{ idrol }}',
+                    'idmenus' : idMenus
+                },
+                type: 'POST'
+            }).done(function(data){
+
+            });
         }
 
     </script>

@@ -77,6 +77,27 @@ class ConcesionController extends BaseController
         ));
     }
 
+    public function modificarAction(Request $peticion)
+    {
+        try{
+            $idrol = $peticion->get('idrol');
+            $idMenus = $peticion->get('idmenus');
+            $rol = $this->getEM()->getRepository('ArquitecturaBaseBundle:Rol')->find($idrol);
+            $menus = $this->getEM()->getRepository('ArquitecturaBaseBundle:Menu')->listarMenusDadosId($idMenus);
+            $gestor = $this->get('administracion.gestor');
+            $gestor->establecerConcesiones($rol,$menus);
+            return new JsonResponse(array(
+                'type' => 'success',
+                'message' => 'Fueron establecidas las concesones correctamente'
+            ));
+        }catch(\Exception $e){
+            return new JsonResponse(array(
+                'type' => 'error',
+                'message' => 'Hubo un error al establecer las concesiones'
+            ));
+        }
+    }
+
     /**
      * @return JsonResponse
      */

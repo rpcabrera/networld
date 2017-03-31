@@ -2,6 +2,7 @@
 
 namespace ArquitecturaBaseBundle\Repository;
 
+use ArquitecturaBaseBundle\Entity\Rol;
 use ArquitecturaBaseBundle\Entity\Usuario;
 use Doctrine\ORM\EntityRepository;
 
@@ -60,4 +61,16 @@ class ConcesionRepository extends EntityRepository
         $concesiones = $qbConcesiones->getQuery()->getResult();
         return $concesiones;
     }
+
+    /**
+     * @param $rol Rol
+     */
+    public function eliminarConcesionesDeRol($rol){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->delete('concesion')
+            ->from('ArquitecturaBaseBundle:Concesion','concesion')
+            ->where($qb->expr()->eq('concesion.rol',$rol));
+        $qb->getQuery()->execute();
+    }
+
 }

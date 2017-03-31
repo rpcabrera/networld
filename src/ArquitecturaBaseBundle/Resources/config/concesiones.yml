@@ -24,6 +24,11 @@ concesiones_load_ajax:
     defaults:
         _controller: ArquitecturaBaseBundle:Concesion:loadAjax
         idrol : null
+#AJAX
+concesiones_modificar:
+    path: /modificar
+    defaults:
+        _controller: ArquitecturaBaseBundle:Concesion:modificar
 
 #AJAX
 cargar_usuarios_ajax:

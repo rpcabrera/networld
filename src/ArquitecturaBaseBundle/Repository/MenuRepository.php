@@ -59,4 +59,14 @@ class MenuRepository extends EntityRepository
         $menus = $this->findAll();
         return $menus;
     }
+
+    public function listarMenusDadosId($idArray){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('menu')
+            ->from('ArquitecturaBaseBundle:Menu','menu')
+            ->andWhere($qb->expr()->in('menu.id',':prmIdArray'))
+            ->setParameter('prmIdArray', $idArray)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

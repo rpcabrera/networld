@@ -9,6 +9,7 @@
 namespace ArquitecturaBaseBundle\Gestores;
 
 
+use ArquitecturaBaseBundle\Entity\Concesion;
 use ArquitecturaBaseBundle\Entity\Menu;
 use ArquitecturaBaseBundle\Entity\Rol;
 use ArquitecturaBaseBundle\Entity\Usuario;
@@ -85,6 +86,28 @@ class AdministracionGtr extends BaseGtr
     public function salvarMenu($menu){
         $this->getEm()->persist($menu);
         $this->getEm()->flush();
+    }
+
+    /**
+     * @param $rol Rol
+     * @param $menus Menu[]
+     */
+    public function establecerConcesiones($rol, $menus){
+        //Limpiar las concesiones anteriores del rol
+        $cr = $this->getEm()->getRepository('ArquitecturaBaseBundle:Concesion');
+        $cr->eliminarConcesionesDeRol($rol);
+        //Agregar las nuevas concesiones
+        foreach ($menus as $menu) {
+            $concesion = new Concesion();
+            $concesion->setActiva(true);
+            $fechaInicio = new \DateTime();
+            $concesion->setFechainicio($fechaInicio);
+            $fechaFin = $fechaInicio->modify("+1 month");
+            $concesion->setFechafin($fechaFin);
+            $concesion->setMenu($menu);
+            $concesion->setRol($rol);
+            $this->getEm()->persist($concesion);
+        }
     }
 
 }
